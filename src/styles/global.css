@@ -61,42 +61,41 @@ b {
   isolation: isolate;
   background-color: var(--color-background);
   margin-block-start: 8rem;
+  inline-size: fit-content;
+  position: relative;
 }
 
 .header > * {
-  grid-area: 1 / 1;
+  grid-column: 1;
 }
 
 .header img {
-  place-self: start;
   display: block;
   inline-size: 100%;
-  max-inline-size: 8rem;
+  max-inline-size: 6rem;
   block-size: auto;
-}
-
-.header__text {
-  display: grid;
-  place-self: start;
-  inline-size: fit-content;
+  position: absolute;
+  top: -1rem;
+  right: 0;
 }
 
 .header h1 {
   z-index: 1;
   place-self: start;
   margin: 0;
-  padding: 0.5rem 0 0 0.5rem;
   color: var(--color-background);
   mix-blend-mode: difference;
-  font-size: 3.5rem;
+  font-size: 3rem;
   line-height: 1;
   letter-spacing: -0.02em;
-  text-align: end;
+  text-align: start;
 }
 
 .tagline {
+  grid-row: 2;
+  align-self: start;
   font-size: 1.5rem;
   color: var(--color-foreground-secondary);
-  justify-self: end;
-  text-align: end;
+  justify-self: start;
+  text-align: start;
 }
