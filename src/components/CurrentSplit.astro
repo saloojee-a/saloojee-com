@@ -1,0 +1,292 @@
+---
+import { workouts } from "../data/workouts.json";
+
+function exerciseLabel(index: number): string {
+  let letters = "";
+  for (
+    let number = index + 1;
+    number > 0;
+    number = Math.floor((number - 1) / 26)
+  ) {
+    letters = String.fromCharCode(65 + ((number - 1) % 26)) + letters;
+  }
+  return `${letters}1`;
+}
+---
+
+<section class="split" aria-labelledby="split-heading">
+  <h2 id="split-heading">Current split</h2>
+  <div class="console" data-workout-split>
+    <div class="workout-control" hidden>
+      <select
+        class="workout-selector"
+        aria-label="Select workout"
+        aria-controls="workout-details"
+      >
+        {workouts.map((workout, index) => (
+          <option value={index}>
+            {workout.name} — {workout.focus}
+          </option>
+        ))}
+      </select>
+    </div>
+
+    <div id="workout-details">
+      {workouts.map((workout) => (
+        <div
+          class="session"
+          data-session
+          role="region"
+          aria-label={`${workout.name} — ${workout.focus}`}
+        >
+          <h3 class="session-heading">
+            {workout.name} — {workout.focus}
+          </h3>
+          {workout.exercises.length > 0 ? (
+            <table>
+              <caption class="sr-only">{workout.name} exercises</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Exercise</th>
+                  <th scope="col">Sets</th>
+                  <th scope="col">Reps</th>
+                </tr>
+              </thead>
+              <tbody>
+                {workout.exercises.map((exercise, exerciseIndex) => (
+                  <tr>
+                    <th scope="row">
+                      <span class="exercise-index">
+                        {exerciseLabel(exerciseIndex)}
+                      </span>
+                      {exercise.name}
+                    </th>
+                    <td>
+                      {exercise.sets}
+                      <span class="sr-only"> sets</span>
+                    </td>
+                    <td>
+                      {exercise.reps}
+                      <span class="sr-only"> reps</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p class="empty">No exercises. Take the day to recover.</p>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>("[data-workout-split]")
+    .forEach((split) => {
+      const control = split.querySelector<HTMLElement>(".workout-control");
+      const selector =
+        split.querySelector<HTMLSelectElement>(".workout-selector");
+      const panels = Array.from(
+        split.querySelectorAll<HTMLElement>("[data-session]"),
+      );
+      if (!control || !selector || panels.length === 0) return;
+
+      function selectWorkout() {
+        panels.forEach((panel, index) => {
+          panel.hidden = index !== Number(selector?.value);
+        });
+      }
+
+      split
+        .querySelectorAll<HTMLElement>(".session-heading")
+        .forEach((heading) => {
+          heading.hidden = true;
+        });
+      selector.addEventListener("change", selectWorkout);
+      selectWorkout();
+      control.hidden = false;
+    });
+</script>
+
+<style>
+  .split {
+    margin-block-end: 4rem;
+  }
+
+  .console {
+    --panel-padding: 1rem;
+    --panel-inner-radius: 0.75rem;
+    --panel-radius: calc(var(--panel-padding) + var(--panel-inner-radius));
+    --cell-padding-block: 0.75rem;
+    --cell-padding-inline: 1rem;
+    --row-gap: 0.5rem;
+    --panel-background: oklch(0.22 0.008 27.557);
+    --panel-surface: oklch(0.29 0.008 27.557);
+    --panel-control: oklch(0.36 0.008 27.557);
+    --panel-text: oklch(0.94 0.003 27.557);
+    --panel-muted: oklch(0.75 0.008 27.557);
+    --panel-border: oklch(from var(--panel-text) l c h / 0.1);
+    display: grid;
+    gap: 0.75rem;
+    color-scheme: dark;
+    color: var(--panel-text);
+    /* Resting content: surface contrast and a hairline, not a lifted shadow. */
+    background: var(--panel-background);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--panel-radius);
+    padding: var(--panel-padding);
+  }
+
+  .workout-control {
+    position: relative;
+  }
+
+  .workout-control::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    inline-size: 1rem;
+    block-size: 1rem;
+    background-color: currentColor;
+    mask: url("/icons/phosphor/caret-down.svg") center / contain no-repeat;
+    pointer-events: none;
+  }
+
+  .workout-selector {
+    appearance: none;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: var(--cell-padding-block) var(--cell-padding-inline);
+    padding-inline-end: 3rem;
+    border: 1px solid var(--panel-control);
+    border-radius: var(--panel-inner-radius);
+    background: var(--panel-background);
+    /* A recessed control gets a top-edge inset, not an elevation shadow. */
+    box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.18);
+    color: var(--panel-text);
+    font: inherit;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .workout-selector:focus-visible {
+    outline: 2px solid var(--panel-text);
+    outline-offset: 0.25rem;
+  }
+
+  #workout-details {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .session-heading {
+    margin: 0 0 var(--row-gap);
+    padding: var(--cell-padding-block) var(--cell-padding-inline);
+    color: var(--panel-text);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .empty {
+    margin: 0;
+    padding: var(--cell-padding-block) var(--cell-padding-inline);
+    border-radius: var(--panel-inner-radius);
+    background: var(--panel-surface);
+    border: 1px solid var(--panel-border);
+    color: var(--panel-muted);
+    font-size: 0.875rem;
+  }
+
+  table {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content max-content;
+    gap: var(--row-gap) 0;
+    width: 100%;
+    border-spacing: 0;
+    text-align: start;
+    font-size: 16px;
+  }
+
+  /* Explicit gaps, shared columns, and no table-generated outer spacing. */
+  thead,
+  tbody,
+  tr {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    row-gap: var(--row-gap);
+  }
+
+  th,
+  td {
+    align-content: center;
+    padding: var(--cell-padding-block) var(--cell-padding-inline);
+    text-align: start;
+  }
+
+  thead th {
+    padding-block: 0.25rem;
+    color: var(--panel-muted);
+    font-size: inherit;
+  }
+
+  thead th:not(:first-child) {
+    text-align: end;
+  }
+
+  td,
+  .exercise-index {
+    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+
+  tbody th,
+  tbody td {
+    background: var(--panel-surface);
+    border-block: 1px solid var(--panel-border);
+  }
+
+  tbody th:first-child {
+    border-inline-start: 1px solid var(--panel-border);
+    border-start-start-radius: var(--panel-inner-radius);
+    border-end-start-radius: var(--panel-inner-radius);
+  }
+
+  tbody td:last-child {
+    border-inline-end: 1px solid var(--panel-border);
+    border-start-end-radius: var(--panel-inner-radius);
+    border-end-end-radius: var(--panel-inner-radius);
+  }
+
+  th {
+    font-weight: 400;
+  }
+
+  td {
+    text-align: end;
+    white-space: nowrap;
+  }
+
+  .exercise-index {
+    display: inline-block;
+    margin-inline-end: 0.75rem;
+    color: var(--panel-muted);
+    font-size: inherit;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>

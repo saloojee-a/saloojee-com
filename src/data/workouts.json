@@ -1,0 +1,28 @@
+{
+  "workouts": [
+    {
+      "name": "Lower A",
+      "focus": "Quad focus",
+      "exercises": [
+        { "name": "Placeholder exercise one", "sets": 3, "reps": "8–12" },
+        { "name": "Placeholder exercise two", "sets": 3, "reps": "10–15" }
+      ]
+    },
+    {
+      "name": "Upper A",
+      "focus": "Back focus",
+      "exercises": [
+        { "name": "Placeholder exercise three", "sets": 3, "reps": "6–10" },
+        { "name": "Placeholder exercise four", "sets": 2, "reps": "12–15" }
+      ]
+    },
+    {
+      "name": "Lower B",
+      "focus": "Posterior chain focus",
+      "exercises": [
+        { "name": "Placeholder exercise five", "sets": 3, "reps": "8–12" },
+        { "name": "Placeholder exercise six", "sets": 2, "reps": "12–15" }
+      ]
+    }
+  ]
+}

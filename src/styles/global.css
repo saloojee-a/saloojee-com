@@ -5,9 +5,11 @@
   --color-background: oklch(0.97 0.003 27.557);
   --color-surface: oklch(0.99 0.002 27.557);
   --color-border: oklch(0.88 0.008 27.557);
-  --color-foreground-primary: oklch(0.28 0.012 27.557);
-  --color-foreground-secondary: oklch(0.43 0.012 27.557);
-  --color-accent: oklch(0.52 0.12 27.557);
+  --color-foreground-primary: oklch(0.28 0.008 27.557);
+  --color-foreground-secondary: oklch(0.43 0.008 27.557);
+  --color-foreground-tertiary: oklch(0.55 0.008 27.557);
+  --color-accent: oklch(0.572 0.215 27.557);
+  --color-accent-rest: oklch(from var(--color-accent) calc(l + 0.08) c h);
 
   font-family: system-ui, sans-serif;
   font-size: 1rem;
@@ -32,7 +34,7 @@ body {
   display: grid;
   grid-template-columns:
     minmax(var(--wrapper-gutter), 1fr)
-    min(42rem, calc(100% - 2 * var(--wrapper-gutter)))
+    min(36rem, calc(100% - 2 * var(--wrapper-gutter)))
     minmax(var(--wrapper-gutter), 1fr);
 }
 
@@ -56,46 +58,22 @@ b {
   color: var(--color-foreground-primary);
 }
 
-.header {
-  display: grid;
-  isolation: isolate;
-  background-color: var(--color-background);
-  margin-block-start: 8rem;
-  inline-size: fit-content;
-  position: relative;
-}
-
-.header > * {
-  grid-column: 1;
-}
-
-.header img {
-  display: block;
-  inline-size: 100%;
-  max-inline-size: 6rem;
-  block-size: auto;
-  position: absolute;
-  top: -1rem;
-  right: 0;
-}
-
-.header h1 {
-  z-index: 1;
-  place-self: start;
+h1 {
   margin: 0;
-  color: var(--color-background);
-  mix-blend-mode: difference;
-  font-size: 3rem;
+  font-size: 2rem;
   line-height: 1;
   letter-spacing: -0.02em;
-  text-align: start;
+  margin-block-end: 2rem;
 }
 
-.tagline {
-  grid-row: 2;
-  align-self: start;
-  font-size: 1.5rem;
-  color: var(--color-foreground-secondary);
-  justify-self: start;
-  text-align: start;
+.intro {
+  margin-block: 8rem 4rem;
+}
+
+.projects {
+  display: grid;
+  gap: 2.5rem;
+  margin: 0 0 4rem;
+  padding: 0;
+  list-style: none;
 }

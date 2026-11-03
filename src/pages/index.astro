@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import Project from "../components/Project.astro";
+import CurrentSplit from "../components/CurrentSplit.astro";
 ---
 
 <!doctype html>
@@ -11,18 +13,49 @@ import "../styles/global.css";
   </head>
   <body class="wrapper">
     <main>
-      <header class="header">
+      <section class="intro">
         <h1>Abdurahmaan Saloojee</h1>
-        <p class="tagline">Software Developer</p>
-        <img
-          src="/threshold-headshot.png"
-          alt=""
-          width="656"
-          height="924"
-          fetchpriority="high"
-        />
-      </header>
-      <section></section>
+
+        <p>
+          I operate a small software development consultancy called Omniwerx. I
+          design websites and build marketing systems for small companies that
+          need faster solutions and stronger visual identity.
+        </p>
+        <p>
+          I'm currently a software engineer at Pre-Script, a principles-based
+          fitness education company. We're dedicated to pushing the boundaries
+          of human performance by forging better coaches and creating better
+          athletes.
+        </p>
+        <p>
+          Outside that, I'm trying to learn systems programming: Rust, Go,
+          Kubernetes, and Nix.
+        </p>
+      </section>
+      <section class="work">
+        <h2>Work</h2>
+        <ol class="projects">
+          <Project
+            index={1}
+            title="Project one"
+            href="https://example.com/#project-one"
+            description="A short sentence describing the first project."
+          />
+          <Project
+            index={2}
+            title="Project two"
+            href="https://example.com/#project-two"
+            description="A short sentence describing the second project."
+          />
+          <Project
+            index={3}
+            title="Project three"
+            href="https://example.com/#project-three"
+            description="A short sentence describing the third project."
+          />
+        </ol>
+      </section>
+      <CurrentSplit />
     </main>
   </body>
 </html>

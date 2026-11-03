@@ -12,6 +12,26 @@ vp run dev
 Use `vp run dev` (not `vp dev`) to start Astro at `http://localhost:4321`.
 Use `vp run preview` for a previously built site and `vp run build` when a production build is needed.
 
+## Current split
+
+Edit the `workouts` array in `src/data/workouts.json`. Each workout has a `name`,
+`focus`, and `exercises` with a name, sets, and reps. The current content is
+placeholder programming.
+
+`src/components/CurrentSplit.astro` renders a rounded dark training panel.
+A contrasting pill-shaped native dropdown shows each workout name and focus,
+followed by an exercise, sets, and reps table with rounded row highlights. Exercise modifiers run A1, B1, C1, and so on within each
+workout. The first workout is selected initially. Without JavaScript, all
+workouts remain visible with their headings. There is no date logic or timers.
+
+No backend is required. Changing the JSON requires redeploying the static site.
+
+Run the workout data checks without building:
+
+```sh
+node --test tests/workouts.test.mjs
+```
+
 ## Checks
 
 ```sh
