@@ -118,8 +118,8 @@ function exerciseLabel(index: number): string {
 
   .console {
     --panel-padding: 1rem;
-    --panel-inner-radius: 0.75rem;
-    --panel-radius: calc(var(--panel-padding) + var(--panel-inner-radius));
+    --panel-radius: 1.5rem;
+    --panel-inner-radius: max(0px, calc(var(--panel-radius) - var(--panel-padding)));
     --cell-padding-block: 0.75rem;
     --cell-padding-inline: 1rem;
     --row-gap: 0.5rem;
@@ -160,9 +160,10 @@ function exerciseLabel(index: number): string {
   .workout-selector {
     appearance: none;
     width: 100%;
+    block-size: 3rem;
     min-width: 0;
     margin: 0;
-    padding: var(--cell-padding-block) var(--cell-padding-inline);
+    padding: 0 var(--cell-padding-inline);
     padding-inline-end: 3rem;
     border: 1px solid var(--panel-control);
     border-radius: var(--panel-inner-radius);
@@ -242,7 +243,6 @@ function exerciseLabel(index: number): string {
 
   td,
   .exercise-index {
-    font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
     font-variant-numeric: tabular-nums;
   }
 

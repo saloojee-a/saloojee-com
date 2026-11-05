@@ -1,5 +1,14 @@
+@import "./fonts.css";
+
 :root {
   color-scheme: light;
+
+  --font-die-a: "Die Grotesk A", system-ui, sans-serif;
+  --font-die-b: "Die Grotesk B", system-ui, sans-serif;
+  --font-die-c: "Die Grotesk C", system-ui, sans-serif;
+  --font-die-d: "Die Grotesk D", system-ui, sans-serif;
+  --font-body: var(--font-die-a);
+  --font-display: var(--font-die-d);
 
   /* Shared hue from Omniwerx; restrained chroma for a light palette. */
   --color-background: oklch(0.97 0.003 27.557);
@@ -9,9 +18,15 @@
   --color-foreground-secondary: oklch(0.43 0.008 27.557);
   --color-foreground-tertiary: oklch(0.55 0.008 27.557);
   --color-accent: oklch(0.572 0.215 27.557);
-  --color-accent-rest: oklch(from var(--color-accent) calc(l + 0.08) c h);
 
-  font-family: system-ui, sans-serif;
+  /* Shared motion curve from Omniwerx. */
+  --bezier: cubic-bezier(0.1, 0.93, 0, 1);
+
+  /* Grayscale antialiasing on macOS; other platforms keep native rendering. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.5;
   color: var(--color-foreground-secondary);
@@ -59,20 +74,53 @@ b {
 }
 
 h1 {
+  font-family: var(--font-display);
   margin: 0;
-  font-size: 2rem;
+  font-size: 16cqi;
   line-height: 1;
-  letter-spacing: -0.02em;
-  margin-block-end: 2rem;
+}
+
+h2 {
+  margin: 0 0 1.5rem;
+}
+
+h1 > span {
+  display: block;
+  width: max-content;
+  white-space: nowrap;
 }
 
 .intro {
-  margin-block: 8rem 4rem;
+  container-type: inline-size;
+  /* Fluid section spacing is the exception to the fixed spacing scale. */
+  margin-block: clamp(4rem, 2rem + 8vw, 8rem) clamp(2rem, 1rem + 4vw, 4rem);
+}
+
+.intro-heading {
+  padding-block-end: 2rem;
+}
+
+h1 > .intro-surname {
+  display: flex;
+  align-items: baseline;
+  gap: 0.16em;
+}
+
+.intro-heading img {
+  display: block;
+  /* Match the capital letters, with the bottom edge on the text baseline. */
+  inline-size: 1cap;
+  block-size: 1cap;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.intro p + p {
+  margin-block-start: 1rem;
 }
 
 .projects {
   display: grid;
-  gap: 2.5rem;
   margin: 0 0 4rem;
   padding: 0;
   list-style: none;

@@ -1,0 +1,56 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"a"> {
+  icon?: boolean;
+}
+
+const { icon = false, class: className, ...attributes } = Astro.props;
+---
+
+<a class:list={["inline-link", className]} {...attributes}>
+  <slot />
+  {icon && <span class="inline-link__icon" aria-hidden="true"></span>}
+</a>
+
+<style>
+  .inline-link {
+    display: inline;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-decoration: none;
+    /* Paint the underline without adding width or changing the line box. */
+    box-shadow: 0 2px 0 var(--color-accent);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    transition: box-shadow 400ms var(--bezier);
+  }
+
+  .inline-link:hover,
+  .inline-link:focus-visible {
+    box-shadow: 0 2px 0 transparent;
+  }
+
+  .inline-link:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  .inline-link__icon {
+    display: inline-block;
+    inline-size: 1em;
+    block-size: 1em;
+    margin-inline-start: 0.25em;
+    vertical-align: middle;
+    background-color: currentColor;
+    mask: url("/icons/phosphor/arrow-up-right.svg") center / contain no-repeat;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .inline-link {
+      transition: none;
+    }
+  }
+</style>

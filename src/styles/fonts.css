@@ -1,0 +1,91 @@
+/* Static optical cuts: A for small text; D for headlines/logotypes.
+ * https://klim.co.nz/blog/die-grotesk-design-information/
+ */
+
+@font-face {
+  font-family: "Die Grotesk A";
+  src:
+    local("Die Grotesk A Regular"),
+    local("DieGroteskA-Regular"),
+    url("/fonts/die-grotesk-a-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk A";
+  src:
+    local("Die Grotesk A Bold"),
+    local("DieGroteskA-Bold"),
+    url("/fonts/die-grotesk-a-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk B";
+  src:
+    local("Die Grotesk B Regular"),
+    local("DieGroteskB-Regular"),
+    url("/fonts/die-grotesk-b-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk B";
+  src:
+    local("Die Grotesk B Bold"),
+    local("DieGroteskB-Bold"),
+    url("/fonts/die-grotesk-b-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk C";
+  src:
+    local("Die Grotesk C Regular"),
+    local("DieGroteskC-Regular"),
+    url("/fonts/die-grotesk-c-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk C";
+  src:
+    local("Die Grotesk C Bold"),
+    local("DieGroteskC-Bold"),
+    url("/fonts/die-grotesk-c-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk D";
+  src:
+    local("Die Grotesk D Regular"),
+    local("DieGroteskD-Regular"),
+    url("/fonts/die-grotesk-d-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk D";
+  src:
+    local("Die Grotesk D Bold"),
+    local("DieGroteskD-Bold"),
+    url("/fonts/die-grotesk-d-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
