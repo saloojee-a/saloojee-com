@@ -158,13 +158,6 @@ function exerciseLabel(index: number): string {
     background: var(--dark-2);
     border-block-end: 1px solid var(--panel-hairline);
     cursor: pointer;
-    transition: background-color 160ms var(--bezier);
-  }
-
-  /* Dark surfaces communicate depth through lightness, not shadows. */
-  .workout-control:hover,
-  .workout-control:has(.workout-selector:focus-visible) {
-    background: color-mix(in srgb, var(--dark-2) 94%, white);
   }
 
   .workout-control:not([hidden]) {
