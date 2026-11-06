@@ -16,20 +16,30 @@ function exerciseLabel(index: number): string {
 
 <section class="split" aria-labelledby="split-heading">
   <h2 id="split-heading">Current split</h2>
-  <div class="console" data-workout-split>
-    <div class="workout-control" hidden>
+  <div class="training-log" data-workout-split>
+    <label class="workout-control" hidden>
+      <span class="workout-title" aria-hidden="true">
+        <span data-workout-name>{workouts[0]?.name}</span>
+        <span class="session-focus" data-workout-focus>
+          {workouts[0]?.focus}
+        </span>
+      </span>
       <select
         class="workout-selector"
         aria-label="Select workout"
         aria-controls="workout-details"
       >
         {workouts.map((workout, index) => (
-          <option value={index}>
+          <option
+            value={index}
+            data-name={workout.name}
+            data-focus={workout.focus}
+          >
             {workout.name} — {workout.focus}
           </option>
         ))}
       </select>
-    </div>
+    </label>
 
     <div id="workout-details">
       {workouts.map((workout) => (
@@ -40,7 +50,8 @@ function exerciseLabel(index: number): string {
           aria-label={`${workout.name} — ${workout.focus}`}
         >
           <h3 class="session-heading">
-            {workout.name} — {workout.focus}
+            {workout.name}
+            <span class="session-focus">{workout.focus}</span>
           </h3>
           {workout.exercises.length > 0 ? (
             <table>
@@ -94,7 +105,18 @@ function exerciseLabel(index: number): string {
       );
       if (!control || !selector || panels.length === 0) return;
 
+      const workoutName = split.querySelector<HTMLElement>(
+        "[data-workout-name]",
+      );
+      const workoutFocus = split.querySelector<HTMLElement>(
+        "[data-workout-focus]",
+      );
+
       function selectWorkout() {
+        const option = selector?.selectedOptions[0];
+        if (workoutName) workoutName.textContent = option?.dataset.name ?? "";
+        if (workoutFocus)
+          workoutFocus.textContent = option?.dataset.focus ?? "";
         panels.forEach((panel, index) => {
           panel.hidden = index !== Number(selector?.value);
         });
@@ -116,129 +138,170 @@ function exerciseLabel(index: number): string {
     margin-block-end: 4rem;
   }
 
-  .console {
-    --panel-padding: 1rem;
-    --panel-radius: 1.5rem;
-    --panel-inner-radius: max(0px, calc(var(--panel-radius) - var(--panel-padding)));
-    --cell-padding-block: 0.75rem;
-    --cell-padding-inline: 1rem;
-    --row-gap: 0.5rem;
-    --panel-background: oklch(0.22 0.008 27.557);
-    --panel-surface: oklch(0.29 0.008 27.557);
-    --panel-control: oklch(0.36 0.008 27.557);
-    --panel-text: oklch(0.94 0.003 27.557);
-    --panel-muted: oklch(0.75 0.008 27.557);
-    --panel-border: oklch(from var(--panel-text) l c h / 0.1);
-    display: grid;
-    gap: 0.75rem;
-    color-scheme: dark;
-    color: var(--panel-text);
-    /* Resting content: surface contrast and a hairline, not a lifted shadow. */
-    background: var(--panel-background);
-    border: 1px solid var(--panel-border);
-    border-radius: var(--panel-radius);
-    padding: var(--panel-padding);
+  .training-log {
+    --foreground-1: var(--light-1);
+    --foreground-2: var(--light-2);
+    --foreground-3: var(--light-3);
+    --panel-hairline: rgb(255 255 255 / 0.12);
+    border: 1px solid var(--panel-hairline);
+    font-size: 18px;
+    background: var(--dark-1);
+    color: var(--foreground-2);
   }
 
   .workout-control {
     position: relative;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--dark-2);
+    border-block-end: 1px solid var(--panel-hairline);
+    cursor: pointer;
+    transition: background-color 160ms var(--bezier);
+  }
+
+  /* Dark surfaces communicate depth through lightness, not shadows. */
+  .workout-control:hover,
+  .workout-control:has(.workout-selector:focus-visible) {
+    background: color-mix(in srgb, var(--dark-2) 94%, white);
+  }
+
+  .workout-control:not([hidden]) {
+    display: flex;
   }
 
   .workout-control::after {
     content: "";
-    position: absolute;
-    inset-inline-end: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    inline-size: 1rem;
-    block-size: 1rem;
-    background-color: currentColor;
-    mask: url("/icons/phosphor/caret-down.svg") center / contain no-repeat;
+    flex: 0 0 auto;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    background-color: var(--light-1);
+    mask: url("/icons/phosphor/caret-down-bold.svg") center / contain no-repeat;
     pointer-events: none;
   }
 
-  .workout-selector {
-    appearance: none;
-    width: 100%;
-    block-size: 3rem;
-    min-width: 0;
-    margin: 0;
-    padding: 0 var(--cell-padding-inline);
-    padding-inline-end: 3rem;
-    border: 1px solid var(--panel-control);
-    border-radius: var(--panel-inner-radius);
-    background: var(--panel-background);
-    /* A recessed control gets a top-edge inset, not an elevation shadow. */
-    box-shadow: inset 0 1px 2px oklch(0 0 0 / 0.18);
-    color: var(--panel-text);
-    font: inherit;
+  .workout-title {
+    color: var(--foreground-1);
     font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .workout-selector {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    font: inherit;
     cursor: pointer;
   }
 
-  .workout-selector:focus-visible {
-    outline: 2px solid var(--panel-text);
+  .workout-selector option {
+    font-size: 18px;
+    color: var(--dark-1);
+    background: var(--color-background);
+  }
+
+  .workout-control:has(.workout-selector:focus-visible) {
+    outline: 2px solid var(--light-1);
     outline-offset: 0.25rem;
   }
 
   #workout-details {
     display: grid;
-    gap: 1rem;
+    gap: 2rem;
   }
 
   .session-heading {
-    margin: 0 0 var(--row-gap);
-    padding: var(--cell-padding-block) var(--cell-padding-inline);
-    color: var(--panel-text);
-    font-size: 1rem;
-    font-weight: 500;
+    margin: 0 -1rem;
+    padding: 1rem;
+    background: var(--dark-2);
+    color: var(--foreground-1);
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 700;
+  }
+
+  .session {
+    padding: 0 1rem 0.5rem;
+  }
+
+  .session table,
+  .session .empty {
+    margin-block-start: 1.5rem;
+  }
+
+  .session-focus {
+    margin-inline-start: 0.5rem;
+    color: var(--foreground-3);
+    font-size: 18px;
+    font-weight: 400;
   }
 
   .empty {
     margin: 0;
-    padding: var(--cell-padding-block) var(--cell-padding-inline);
-    border-radius: var(--panel-inner-radius);
-    background: var(--panel-surface);
-    border: 1px solid var(--panel-border);
-    color: var(--panel-muted);
-    font-size: 0.875rem;
+    padding-block: 1rem;
+    color: var(--foreground-2);
   }
 
   table {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content max-content;
-    gap: var(--row-gap) 0;
     width: 100%;
     border-spacing: 0;
     text-align: start;
-    font-size: 16px;
+    font-size: inherit;
   }
 
-  /* Explicit gaps, shared columns, and no table-generated outer spacing. */
   thead,
   tbody,
   tr {
     display: grid;
     grid-template-columns: subgrid;
     grid-column: 1 / -1;
-    row-gap: var(--row-gap);
   }
 
   th,
   td {
-    align-content: center;
-    padding: var(--cell-padding-block) var(--cell-padding-inline);
+    align-content: baseline;
+    padding-block: 0.5rem;
     text-align: start;
   }
 
+  th:not(:first-child),
+  td {
+    padding-inline-start: 1rem;
+    text-align: end;
+  }
+
+  tr > :nth-child(2) {
+    text-align: center;
+  }
+
   thead th {
-    padding-block: 0.25rem;
-    color: var(--panel-muted);
+    padding-block: 0 0.5rem;
+    color: var(--foreground-3);
     font-size: inherit;
   }
 
-  thead th:not(:first-child) {
-    text-align: end;
+  thead tr {
+    border-block-end: 1px solid var(--panel-hairline);
+  }
+
+  tbody tr + tr {
+    border-block-start: 1px dashed var(--panel-hairline);
+  }
+
+  tbody th {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    color: inherit;
+  }
+
+  th {
+    font-weight: 400;
   }
 
   td,
@@ -246,37 +309,13 @@ function exerciseLabel(index: number): string {
     font-variant-numeric: tabular-nums;
   }
 
-  tbody th,
-  tbody td {
-    background: var(--panel-surface);
-    border-block: 1px solid var(--panel-border);
-  }
-
-  tbody th:first-child {
-    border-inline-start: 1px solid var(--panel-border);
-    border-start-start-radius: var(--panel-inner-radius);
-    border-end-start-radius: var(--panel-inner-radius);
-  }
-
-  tbody td:last-child {
-    border-inline-end: 1px solid var(--panel-border);
-    border-start-end-radius: var(--panel-inner-radius);
-    border-end-end-radius: var(--panel-inner-radius);
-  }
-
-  th {
-    font-weight: 400;
-  }
-
   td {
-    text-align: end;
+    color: var(--foreground-2);
     white-space: nowrap;
   }
 
   .exercise-index {
-    display: inline-block;
-    margin-inline-end: 0.75rem;
-    color: var(--panel-muted);
+    color: var(--foreground-3);
     font-size: inherit;
   }
 

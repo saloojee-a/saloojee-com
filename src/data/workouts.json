@@ -1,27 +1,79 @@
 {
   "workouts": [
     {
-      "name": "Lower A",
+      "name": "Pull A",
+      "focus": "Hypertrophy focus",
+      "exercises": [
+        { "name": "Feet-elevated side pike", "sets": 2, "reps": "4-8" },
+        { "name": "Rope pullover", "sets": 2, "reps": "8-10" },
+        { "name": "Pull-ups", "sets": 3, "reps": "AMRAP" },
+        { "name": "T-bar row", "sets": 3, "reps": "6-10" },
+        { "name": "Single-arm cable pulldown", "sets": 3, "reps": "8-12" },
+        { "name": "Double cable RPD", "sets": 3, "reps": "12-15" },
+        { "name": "High cable curl", "sets": 2, "reps": "12-15" },
+        { "name": "Alternating DB curls", "sets": 2, "reps": "8-10" }
+      ]
+    },
+    {
+      "name": "Push A",
+      "focus": "Hypertrophy focus",
+      "exercises": [
+        { "name": "Captain's chair leg raise", "sets": 2, "reps": "8-12" },
+        { "name": "Alternating cable press", "sets": 2, "reps": "8-12" },
+        { "name": "Low-incline DB press", "sets": 3, "reps": "6-10" },
+        { "name": "DB laterals", "sets": 3, "reps": "12-20" },
+        { "name": "Seated plate press", "sets": 2, "reps": "8-12" },
+        { "name": "Pec fly", "sets": 2, "reps": "8-12" },
+        { "name": "Single-arm cable lateral", "sets": 2, "reps": "8-12" },
+        { "name": "Single-arm overhead extension", "sets": 2, "reps": "6-12" }
+      ]
+    },
+    {
+      "name": "Legs A",
+      "focus": "Hamstring/glute focus",
+      "exercises": [
+        { "name": "Soleus calf raise", "sets": 2, "reps": "10-12" },
+        { "name": "BB deadlift", "sets": 2, "reps": "4-8" },
+        { "name": "Lying hamstring curl", "sets": 2, "reps": "10-12" },
+        { "name": "Contralateral B-stance RDL", "sets": 2, "reps": "8-12" },
+        { "name": "Seated hamstring curl", "sets": 2, "reps": "8-12" }
+      ]
+    },
+    {
+      "name": "Pull B",
+      "focus": "Skill focus",
+      "exercises": [
+        { "name": "Feet-elevated side pike", "sets": 2, "reps": "4-8" },
+        { "name": "Ez-bar pullover", "sets": 2, "reps": "8-10" },
+        { "name": "Bent-over BB row", "sets": 3, "reps": "6-10" },
+        { "name": "V-grip lat pulldown", "sets": 3, "reps": "8-12" },
+        { "name": "Single-arm cable RPD", "sets": 3, "reps": "10-15" },
+        { "name": "Single-arm plate preacher curl", "sets": 2, "reps": "10-15" },
+        { "name": "Lengthened cable curl", "sets": 2, "reps": "8-12" }
+      ]
+    },
+    {
+      "name": "Push B",
+      "focus": "Skill focus",
+      "exercises": [
+        { "name": "Hanging leg raise", "sets": 2, "reps": "8-12" },
+        { "name": "BB bench press", "sets": 2, "reps": "4-8" },
+        { "name": "High incline DB press", "sets": 3, "reps": "6-10" },
+        { "name": "Seated cable press", "sets": 3, "reps": "8-12" },
+        { "name": "Cable Y-raise", "sets": 2, "reps": "10-15" },
+        { "name": "Cross-body tricep extension", "sets": 2, "reps": "10-15" },
+        { "name": "Upright row", "sets": 2, "reps": "8-12" }
+      ]
+    },
+    {
+      "name": "Legs B",
       "focus": "Quad focus",
       "exercises": [
-        { "name": "Placeholder exercise one", "sets": 3, "reps": "8–12" },
-        { "name": "Placeholder exercise two", "sets": 3, "reps": "10–15" }
-      ]
-    },
-    {
-      "name": "Upper A",
-      "focus": "Back focus",
-      "exercises": [
-        { "name": "Placeholder exercise three", "sets": 3, "reps": "6–10" },
-        { "name": "Placeholder exercise four", "sets": 2, "reps": "12–15" }
-      ]
-    },
-    {
-      "name": "Lower B",
-      "focus": "Posterior chain focus",
-      "exercises": [
-        { "name": "Placeholder exercise five", "sets": 3, "reps": "8–12" },
-        { "name": "Placeholder exercise six", "sets": 2, "reps": "12–15" }
+        { "name": "Gastroc calf raise", "sets": 2, "reps": "12-15" },
+        { "name": "BB front squat", "sets": 2, "reps": "4-8" },
+        { "name": "Plate leg press", "sets": 2, "reps": "10-15" },
+        { "name": "Contralateral RFE SS", "sets": 2, "reps": "6-10" },
+        { "name": "Quad extension", "sets": 2, "reps": "12-20" }
       ]
     }
   ]

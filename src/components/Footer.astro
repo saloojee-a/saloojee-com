@@ -1,0 +1,33 @@
+---
+import InlineLink from "./InlineLink.astro";
+import { getGitCommitHash } from "../scripts/git-commit.js";
+
+const commitHash = getGitCommitHash();
+const repositoryUrl = "https://github.com/asaloojee/saloojee-com";
+---
+
+<footer class="footer">
+  <span>&copy; 2026 Abdurahmaan Saloojee</span>
+  <InlineLink
+    href={commitHash === "unknown" ? repositoryUrl : `${repositoryUrl}/commit/${commitHash}`}
+    title="Git commit"
+  >
+    <code>{commitHash}</code>
+  </InlineLink>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1rem;
+    font-size: 1rem;
+  }
+
+  .footer code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: inherit;
+  }
+</style>

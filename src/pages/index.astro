@@ -2,6 +2,14 @@
 import "../styles/global.css";
 import Project from "../components/Project.astro";
 import CurrentSplit from "../components/CurrentSplit.astro";
+import InlineLink from "../components/InlineLink.astro";
+import Footer from "../components/Footer.astro";
+
+const title = "Abdurahmaan Saloojee | Software Developer";
+const description =
+  "Founder of Omniwerx and Software Engineer at Pre-Script";
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL("/og-image.png", Astro.site);
 ---
 
 <!doctype html>
@@ -9,7 +17,29 @@ import CurrentSplit from "../components/CurrentSplit.astro";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Saloojee</title>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saloojee" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="4800" />
+    <meta property="og:image:height" content="2520" />
+    <meta property="og:image:alt" content="Abdurahmaan Saloojee" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content="Abdurahmaan Saloojee" />
   </head>
   <body class="wrapper">
     <main>
@@ -31,15 +61,17 @@ import CurrentSplit from "../components/CurrentSplit.astro";
         </header>
 
         <p>
-          I operate a small software development consultancy called Omniwerx. I
+          I operate a small software development consultancy called{" "}
+          <InlineLink href="https://www.omniwerx.io">Omniwerx</InlineLink>. I
           design websites and build marketing systems for small companies that
           need faster solutions and stronger visual identity.
         </p>
         <p>
-          I'm currently a software engineer at Pre-Script, a principles-based
-          fitness education company. We're dedicated to pushing the boundaries
-          of human performance by forging better coaches and creating better
-          athletes.
+          I'm currently a software engineer at{" "}
+          <InlineLink href="https://www.pre-script.com">Pre-Script</InlineLink>,
+          a principles-based fitness education company. We're dedicated to
+          pushing the boundaries of human performance by forging better coaches
+          and creating better athletes.
         </p>
         <p>
           Outside that, I'm trying to learn systems programming: Rust, Go,
@@ -51,25 +83,71 @@ import CurrentSplit from "../components/CurrentSplit.astro";
         <ol class="projects">
           <Project
             index={1}
-            title="Project one"
-            href="https://example.com/#project-one"
-            description="A short sentence describing the first project."
+            title="Omniwerx"
+            href="https://www.omniwerx.io"
+            description="Landing page for my consulting business."
           />
           <Project
             index={2}
-            title="Project two"
-            href="https://example.com/#project-two"
-            description="A short sentence describing the second project."
+            title="Pre-Script"
+            href="https://www.pre-script.com"
+            description="Ongoing development and marketing client work."
           />
           <Project
             index={3}
-            title="Project three"
-            href="https://example.com/#project-three"
-            description="A short sentence describing the third project."
+            title="JC Health & Performance"
+            href="https://www.jc-healthperformance.ca"
+            description="Early project for a standalone site and brand kit."
           />
         </ol>
       </section>
       <CurrentSplit />
+      <section class="contact" aria-labelledby="contact-heading">
+        <h2 id="contact-heading">Contact</h2>
+        <ul class="contact-links">
+          <li>
+            <InlineLink
+              href="mailto:a@saloojee.com"
+              icon="envelope-simple"
+              iconOnly
+              aria-label="Email"
+            />
+          </li>
+          <li>
+            <InlineLink
+              href="https://www.github.com/saloojee-a"
+              icon="github-logo"
+              iconOnly
+              aria-label="GitHub"
+            />
+          </li>
+          <li>
+            <InlineLink
+              href="https://www.instagram.com/saloojee_a"
+              icon="instagram-logo"
+              iconOnly
+              aria-label="Instagram"
+            />
+          </li>
+          <li>
+            <InlineLink
+              href="https://www.linkedin.com/in/abdurahmaan-saloojee"
+              icon="linkedin-logo"
+              iconOnly
+              aria-label="LinkedIn"
+            />
+          </li>
+          <li>
+            <InlineLink
+              href="https://www.x.com/saloojee_a"
+              icon="x-logo"
+              iconOnly
+              aria-label="X"
+            />
+          </li>
+        </ul>
+      </section>
     </main>
+    <Footer />
   </body>
 </html>

@@ -1,3 +1,14 @@
+/* JetBrains Mono from Google Fonts, self-hosted to avoid third-party requests.
+ * License: /fonts/jetbrains-mono-OFL.txt
+ */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/jetbrains-mono-regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Static optical cuts: A for small text; D for headlines/logotypes.
  * https://klim.co.nz/blog/die-grotesk-design-information/
  */

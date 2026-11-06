@@ -2,22 +2,35 @@
 import type { HTMLAttributes } from "astro/types";
 
 interface Props extends HTMLAttributes<"a"> {
-  icon?: boolean;
+  iconOnly?: boolean;
+  icon?: boolean | "envelope-simple" | "github-logo" | "instagram-logo" | "linkedin-logo" | "x-logo";
 }
 
-const { icon = false, class: className, ...attributes } = Astro.props;
+const { icon = false, iconOnly = false, class: className, ...attributes } = Astro.props;
+const opensInNewTab = /^https?:\/\//i.test(attributes.href ?? "");
 ---
 
-<a class:list={["inline-link", className]} {...attributes}>
+<a
+  class:list={["inline-link", { "inline-link--icon-only": iconOnly }, className]}
+  {...attributes}
+  target={opensInNewTab ? "_blank" : undefined}
+  rel={opensInNewTab ? "noopener noreferrer" : undefined}
+>
   <slot />
-  {icon && <span class="inline-link__icon" aria-hidden="true"></span>}
+  {icon && (
+    <span
+      class="inline-link__icon"
+      style={`--inline-link-icon: url("/icons/phosphor/${typeof icon === "string" ? icon : "arrow-up-right"}.svg")`}
+      aria-hidden="true"
+    ></span>
+  )}
 </a>
 
 <style>
   .inline-link {
     display: inline;
     padding: 0;
-    color: inherit;
+    color: var(--foreground-1);
     font: inherit;
     letter-spacing: inherit;
     text-decoration: none;
@@ -45,7 +58,18 @@ const { icon = false, class: className, ...attributes } = Astro.props;
     margin-inline-start: 0.25em;
     vertical-align: middle;
     background-color: currentColor;
-    mask: url("/icons/phosphor/arrow-up-right.svg") center / contain no-repeat;
+    mask: var(--inline-link-icon) center / contain no-repeat;
+  }
+
+  .inline-link--icon-only {
+    display: inline-block;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .inline-link--icon-only .inline-link__icon {
+    display: block;
+    margin-inline-start: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {

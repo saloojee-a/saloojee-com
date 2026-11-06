@@ -13,10 +13,20 @@
   /* Shared hue from Omniwerx; restrained chroma for a light palette. */
   --color-background: oklch(0.97 0.003 27.557);
   --color-surface: oklch(0.99 0.002 27.557);
-  --color-border: oklch(0.88 0.008 27.557);
-  --color-foreground-primary: oklch(0.28 0.008 27.557);
-  --color-foreground-secondary: oklch(0.43 0.008 27.557);
-  --color-foreground-tertiary: oklch(0.55 0.008 27.557);
+  --color-hairline: color-mix(in srgb, var(--foreground-3) 30%, transparent);
+  /* Resting content stays grounded; only the portrait gets a contact shadow. */
+  --shadow-resting: 0 1px 1px rgb(0 0 0 / 0.06), 0 2px 4px rgb(0 0 0 / 0.03);
+  --dark-1: oklch(0.28 0.008 27.557);
+  --dark-2: oklch(0.43 0.008 27.557);
+  --dark-3: oklch(0.55 0.008 27.557);
+  /* Each scale runs strongest (1) to weakest (3). */
+  --light-1: oklch(0.97 0.003 27.557);
+  --light-2: oklch(0.9 0.008 27.557);
+  --light-3: oklch(0.83 0.008 27.557);
+  /* Default to dark ink on light surfaces; dark panels override these roles. */
+  --foreground-1: var(--dark-1);
+  --foreground-2: var(--dark-2);
+  --foreground-3: var(--dark-3);
   --color-accent: oklch(0.572 0.215 27.557);
 
   /* Shared motion curve from Omniwerx. */
@@ -29,7 +39,7 @@
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--color-foreground-secondary);
+  color: var(--foreground-2);
   background-color: var(--color-background);
 }
 
@@ -70,7 +80,7 @@ h5,
 h6,
 strong,
 b {
-  color: var(--color-foreground-primary);
+  color: var(--foreground-1);
 }
 
 h1 {
@@ -81,6 +91,8 @@ h1 {
 }
 
 h2 {
+  font-size: 2rem;
+  line-height: 1.2;
   margin: 0 0 1.5rem;
 }
 
@@ -113,10 +125,24 @@ h1 > .intro-surname {
   block-size: 1cap;
   flex-shrink: 0;
   object-fit: cover;
+  box-shadow: var(--shadow-resting);
 }
 
 .intro p + p {
   margin-block-start: 1rem;
+}
+
+.contact {
+  margin-block-end: 4rem;
+}
+
+.contact-links {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 18px;
 }
 
 .projects {
