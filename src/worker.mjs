@@ -4,6 +4,11 @@ const FONT_PATHS = new Set(
   ),
 );
 
+const PUBLIC_FONT_ASSETS = new Map([
+  ["/fonts/jetbrains-mono-regular.ttf", "font/ttf"],
+  ["/fonts/jetbrains-mono-OFL.txt", "text/plain; charset=utf-8"],
+]);
+
 const PRODUCTION_HOSTS = new Set(["saloojee.com", "www.saloojee.com"]);
 
 function isSameOriginFontRequest(request, url) {
@@ -44,10 +49,12 @@ export default {
       });
     }
 
+    const publicContentType = PUBLIC_FONT_ASSETS.get(url.pathname);
     if (
-      !FONT_PATHS.has(url.pathname) ||
-      env.ENVIRONMENT !== "production" ||
-      !isSameOriginFontRequest(request, url)
+      !publicContentType &&
+      (!FONT_PATHS.has(url.pathname) ||
+        env.ENVIRONMENT !== "production" ||
+        !isSameOriginFontRequest(request, url))
     ) {
       return new Response(null, { status: 404 });
     }
@@ -56,7 +63,7 @@ export default {
     if (response.status !== 200 && response.status !== 304) return response;
 
     const headers = new Headers(response.headers);
-    headers.set("Content-Type", "font/woff2");
+    headers.set("Content-Type", publicContentType ?? "font/woff2");
     headers.set("Cache-Control", "public, max-age=31536000, immutable");
     headers.set("Cross-Origin-Resource-Policy", "same-origin");
     headers.set("X-Content-Type-Options", "nosniff");
