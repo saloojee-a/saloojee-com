@@ -18,12 +18,12 @@
       "workers_dev": false,
       "routes": [
         {
-          "pattern": "saloojee.com/*",
-          "zone_name": "saloojee.com",
+          "pattern": "saloojee.com",
+          "custom_domain": true,
         },
         {
-          "pattern": "www.saloojee.com/*",
-          "zone_name": "saloojee.com",
+          "pattern": "www.saloojee.com",
+          "custom_domain": true,
         },
       ],
     },
