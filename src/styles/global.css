@@ -139,7 +139,7 @@ h1 > .intro-surname {
 .contact-links {
   display: flex;
   gap: 1rem;
-  margin: 0;
+  margin: 1.5rem 0 0;
   padding: 0;
   list-style: none;
   font-size: 18px;
